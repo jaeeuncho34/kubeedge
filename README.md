@@ -54,3 +54,50 @@ sudo apt-get install -y kubelet=1.18.6-00 kubeadm=1.18.6-00 kubectl=1.18.6-00
 ```
 sudo apt-mark hold kubelet kubeadm kubectl
 ```
+* deploy kubernetes native cluster to the master node
+> {MASTER_NODE_IP} : Master Node Private IP
+> 
+> --pod-network-cidr=10.244.0.0/16은 flannel CNI 설치 시 설정값
+```
+sudo kubeadm init --apiserver-advertise-address=${MASTER_NODE_IP} --pod-network-cidr=10.244.0.0/16
+```
+* To start using your cluster, you need to run the following as a regular user and root user
+```
+mkdir -p $HOME/.kube
+
+sudo cp -i /etc/kubernetes/admin.conf $HOME/.kube/config
+
+sudo chown $(id -u):$(id -g) $HOME/.kube/config
+```
+* deploy CNI plugin
+```
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml
+```
+* Modify the DaemonSet yaml file of the  CNI Plugin so that it is not deployed to Worker Nodes.
+```
+kubectl edit daemonsets.apps -n kube-system kube-flannel-ds-amd64
+```
+> add to the spec.template.spec.affinity.nodeAffinity.requiredDuringSchedulingIgnoredDuringExecution.nodeSelectorTerms.matchExpressions
+```
+- key: node-role.kubernetes.io/edge
+  operator: DoesNotExist
+```
+* install kubeedge keadm to all nodes(root)
+```
+sudo su -
+
+git clone https://github.com/PaaS-TA/paas-ta-container-platform-deployment.git
+
+cd paas-ta-container-platform-deployment/edge
+
+cp keadm /usr/bin/keadm
+```
+* install kubeedge cloudcore to the cloud side
+> {CLOUD_SIDE_IP} : Cloud Side Private IP
+```
+keadm init --advertise-address=${CLOUD_SIDE_IP} --master=https://${CLOUD_SIDE_IP}:6443 --kubeedge-version 1.4.0
+```
+* get token
+```
+keadm gettoken
+```
