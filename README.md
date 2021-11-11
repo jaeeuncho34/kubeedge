@@ -24,7 +24,7 @@ chmod +x kk
 
 ### Step 3: Create a Kubernetes Multi-node Cluster
 ```
-./kk create config --with-kubesphere version [version]
+./kk create config --with-kubesphere [version]
 ```
 * modify the config-sample.yaml file
 > add your hosts information and kubeedge.enabled
