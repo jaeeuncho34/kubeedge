@@ -125,6 +125,9 @@ iptables -t nat -I PREROUTING -p tcp -d 192.168.10.61 --dport 10004 -j DNAT --to
 ### Add an Edge Node on the dashboard
 * After an edge node joins your cluster, some Pods may be scheduled to it while they remains in the Pending state on the edge node. Due to the tolerations some DaemonSets (for example, Calico) have, in the current version (KubeSphere 3.2.0), you need to manually patch some Pods so that they will not be schedule to the edge node.
 ```
+bash noschedule_on_edge.sh
+```
+```
 #!/bin/bash
    
 NodeSelectorPatchJson='{"spec":{"template":{"spec":{"nodeSelector":{"node-role.kubernetes.io/master": "","node-role.kubernetes.io/worker": ""}}}}}'
