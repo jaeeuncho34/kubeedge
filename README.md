@@ -67,6 +67,10 @@ metrics_server:
 ```
 ---
 ## Add Edge Nodes
+```
+apt update
+apt install docker.io -y
+```
 ### Configure EdgeMesh
 > Perform the following steps to configure EdgeMesh on your edge node.
 * Edit /etc/nsswitch.conf.
