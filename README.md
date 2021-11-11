@@ -119,3 +119,24 @@ iptables -t nat -I PREROUTING -p tcp -d 192.168.10.61 --dport 10003 -j DNAT --to
 iptables -t nat -I PREROUTING -p tcp -d 192.168.10.61 --dport 10004 -j DNAT --to-destination 192.168.10.61:30004
 ```
 ### Add an Edge Node on the dashboard
+## Remove an Edge Node
+Before you remove an edge node, delete all your workloads running on it.
+
+1. On your edge node, run the following commands:
+```
+./keadm reset
+apt remove mosquitto
+rm -rf /var/lib/kubeedge /var/lib/edged /etc/kubeedge/ca /etc/kubeedge/certs
+```
+> Note: 
+> If you cannot delete the tmpfs-mounted folder, restart the node or unmount the folder first.
+
+2. Run the following command to remove the edge node from your cluster:
+```
+kubectl delete node <edgenode-name>
+```
+3. To uninstall KubeEdge from your cluster, run the following commands:
+```
+helm uninstall kubeedge -n kubeedge
+kubectl delete ns kubeedge
+```
