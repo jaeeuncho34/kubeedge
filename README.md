@@ -54,3 +54,7 @@ spec:
 ```
 ./kk create cluster -f config-sample.yaml
 ```
+
+## Uninstall KubeSphere
+  ./kk delete cluster -f config-sample.yaml
+
