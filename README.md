@@ -49,6 +49,7 @@ spec:
     
 # kubeedge:
 #   enabled: true
+# add advertiseAddress
 ```
 * Create a cluster using the configuration file
 ```
