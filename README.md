@@ -85,19 +85,26 @@ kubectl edit daemonsets.apps -n kube-system kube-flannel-ds-amd64
 * install kubeedge keadm to all nodes(root)
 ```
 sudo su -
-
-git clone https://github.com/PaaS-TA/paas-ta-container-platform-deployment.git
-
-cd paas-ta-container-platform-deployment/edge
-
-cp keadm /usr/bin/keadm
+wget https://github.com/kubeedge/kubeedge/releases/download/v1.7.1/keadm-v1.7.1-linux-amd64.tar.gz
+tar -zxvf keadm-v1.7.1-linux-amd64.tar.gz
+cd keadm-v1.7.1-linux-amd64
 ```
 * install kubeedge cloudcore to the cloud side
-> {CLOUD_SIDE_IP} : Cloud Side Private IP
 ```
-keadm init --advertise-address=${CLOUD_SIDE_IP} --master=https://${CLOUD_SIDE_IP}:6443 --kubeedge-version 1.4.0
+keadm init --advertise-address="THE-EXPOSED-IP"
 ```
 * get token
 ```
 keadm gettoken
 ```
+
+## deploying with binary
+* create CRDs
+```
+kubectl apply -f https://raw.githubusercontent.com/kubeedge/kubeedge/master/build/crds/devices/devices_v1alpha2_device.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubeedge/kubeedge/master/build/crds/devices/devices_v1alpha2_devicemodel.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubeedge/kubeedge/master/build/crds/reliablesyncs/cluster_objectsync_v1alpha1.yaml
+kubectl apply -f https://raw.githubusercontent.com/kubeedge/kubeedge/master/build/crds/reliablesyncs/objectsync_v1alpha1.yaml
+```
+
+
