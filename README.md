@@ -119,6 +119,35 @@ iptables -t nat -I PREROUTING -p tcp -d 192.168.10.61 --dport 10003 -j DNAT --to
 iptables -t nat -I PREROUTING -p tcp -d 192.168.10.61 --dport 10004 -j DNAT --to-destination 192.168.10.61:30004
 ```
 ### Add an Edge Node on the dashboard
+* After an edge node joins your cluster, some Pods may be scheduled to it while they remains in the Pending state on the edge node. Due to the tolerations some DaemonSets (for example, Calico) have, in the current version (KubeSphere 3.2.0), you need to manually patch some Pods so that they will not be schedule to the edge node.
+```
+#!/bin/bash
+   
+NodeSelectorPatchJson='{"spec":{"template":{"spec":{"nodeSelector":{"node-role.kubernetes.io/master": "","node-role.kubernetes.io/worker": ""}}}}}'
+   
+NoShedulePatchJson='{"spec":{"template":{"spec":{"affinity":{"nodeAffinity":{"requiredDuringSchedulingIgnoredDuringExecution":{"nodeSelectorTerms":[{"matchExpressions":[{"key":"node-role.kubernetes.io/edge","operator":"DoesNotExist"}]}]}}}}}}}'
+   
+edgenode="edgenode"
+if [ $1 ]; then
+        edgenode="$1"
+fi
+   
+   
+namespaces=($(kubectl get pods -A -o wide |egrep -i $edgenode | awk '{print $1}' ))
+pods=($(kubectl get pods -A -o wide |egrep -i $edgenode | awk '{print $2}' ))
+length=${#namespaces[@]}
+   
+   
+for((i=0;i<$length;i++));  
+do
+        ns=${namespaces[$i]}
+        pod=${pods[$i]}
+        resources=$(kubectl -n $ns describe pod $pod | grep "Controlled By" |awk '{print $3}')
+        echo "Patching for ns:"${namespaces[$i]}",resources:"$resources
+        kubectl -n $ns patch $resources --type merge --patch "$NoShedulePatchJson"
+        sleep 1
+done
+```
 ## Remove an Edge Node
 Before you remove an edge node, delete all your workloads running on it.
 
