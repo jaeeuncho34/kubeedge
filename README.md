@@ -10,7 +10,7 @@ Ubuntu 16.04, 18.04 | CPU: 2 Cores, Memory: 4 G, Disk Space: 40 G |
 ```
 sudo apt install docker.io -y
 apt install socat
-apt install connatrack
+apt install conntrack
 ```
 
 ### Step 2: Download KubeKey
