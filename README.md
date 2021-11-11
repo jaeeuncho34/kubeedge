@@ -47,10 +47,14 @@ spec:
     domain: lb.kubesphere.local
     address: ""
     port: "6443"
-    
-# kubeedge:
-#   enabled: true
+
+---
+
+kubeedge:
+  enabled: true
 # add advertiseAddress
+metrics_server:
+  enabled: true # Change "false" to "true".
 ```
 * Create a cluster using the configuration file
 ```
