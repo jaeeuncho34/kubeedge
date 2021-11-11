@@ -60,3 +60,25 @@ spec:
 ```
   ./kk delete cluster -f config-sample.yaml
 ```
+---
+## Add Edge Nodes
+### Configure EdgeMesh
+> Perform the following steps to configure EdgeMesh on your edge node.
+* Edit /etc/nsswitch.conf.
+```
+vi /etc/nsswitch.conf
+```
+* Add the following content to this file:
+```
+hosts:          dns files mdns4_minimal [NOTFOUND=return]
+```
+* Save the file and run the following command to enable IP forwarding:
+```
+sudo echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf
+```
+* Verify your modification:
+> Expected result:
+> net.ipv4.ip_forward = 1
+```
+sudo sysctl -p | grep ip_forward
+```
