@@ -1,7 +1,7 @@
 # KubeEdge with KubeSphere
 ## Install KubeSphere
 ### Step 1: Prepare Linux Hosts
-
+> Need 4 cores for Master node
 System requirements | Minimum Requirements (Each node)
 --- | --- |
 Ubuntu 16.04, 18.04 | CPU: 2 Cores, Memory: 4 G, Disk Space: 40 G |
