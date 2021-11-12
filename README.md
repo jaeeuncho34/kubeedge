@@ -169,6 +169,8 @@ Before you remove an edge node, delete all your workloads running on it.
 1. On your edge node, run the following commands:
 ```
 ./keadm reset
+```
+```
 apt remove mosquitto
 rm -rf /var/lib/kubeedge /var/lib/edged /etc/kubeedge/ca /etc/kubeedge/certs
 ```
