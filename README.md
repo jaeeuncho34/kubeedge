@@ -53,8 +53,6 @@ spec:
 kubeedge:
   enabled: true
 # add advertiseAddress
-metrics_server:
-  enabled: true # Change "false" to "true".
 ```
 * Create a cluster using the configuration file
 ```
@@ -123,6 +121,11 @@ iptables -t nat -I PREROUTING -p tcp -d 192.168.10.61 --dport 10003 -j DNAT --to
 iptables -t nat -I PREROUTING -p tcp -d 192.168.10.61 --dport 10004 -j DNAT --to-destination 192.168.10.61:30004
 ```
 ### Add an Edge Node on the dashboard
+* Edit CRD/cloudconfiguration to show Edge's resources
+```
+metrics_server:
+  enabled: true # Change "false" to "true".
+```
 * After an edge node joins your cluster, some Pods may be scheduled to it while they remains in the Pending state on the edge node. Due to the tolerations some DaemonSets (for example, Calico) have, in the current version (KubeSphere 3.2.0), you need to manually patch some Pods so that they will not be schedule to the edge node.
 ```
 bash noschedule_on_edge.sh
