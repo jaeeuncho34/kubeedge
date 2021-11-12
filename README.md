@@ -126,6 +126,11 @@ iptables -t nat -I PREROUTING -p tcp -d 192.168.10.61 --dport 10004 -j DNAT --to
 metrics_server:
   enabled: true # Change "false" to "true".
 ```
+* Check the installation precess
+```
+kubectl logs -n kubesphere-system $(kubectl get pod -n kubesphere-system -l app=ks-install -o jsonpath='{.items[0].metadata.name}') -f
+```
+
 * After an edge node joins your cluster, some Pods may be scheduled to it while they remains in the Pending state on the edge node. Due to the tolerations some DaemonSets (for example, Calico) have, in the current version (KubeSphere 3.2.0), you need to manually patch some Pods so that they will not be schedule to the edge node.
 ```
 bash noschedule_on_edge.sh
