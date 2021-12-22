@@ -12,7 +12,6 @@ sudo apt-get install -y apt-transport-https ca-certificates curl
 sudo curl -fsSLo /usr/share/keyrings/kubernetes-archive-keyring.gpg https://packages.cloud.google.com/apt/doc/apt-key.gpg 
 
 echo "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main" | sudo tee /etc/apt/sources.list.d/kubernetes.list 
-
 ```
 * Update apt package index, install kubelet, kubeadm and kubectl, and pin their version
 > Install Kubernetes in a lower version because the latest version causes errors.
@@ -23,20 +22,16 @@ sudo apt-get update
 apt install -y kubectl=1.20.12-00 kubelet=1.20.12-00 kubeadm=1.20.12-00 
 
 sudo apt-mark hold kubelet kubeadm kubectl 
-
 ```
-sudo kubeadm init --apiserver-advertise-address=192.168.15.67 --pod-network-cidr=10.244.0.0/16 --upload-certs 
-
-kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml 
-
-
+* Creating a cluster with kubeadm
 ```
 sudo kubeadm init --apiserver-advertise-address=<IP ADRESS> --pod-network-cidr=10.244.0.0/16 --upload-certs 
 ```
- 
+* Installing a Pod network add-on
+```
+kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml 
+```
 
-
- 
 
 https://paastaguide.gitbook.io/paas-ta-5-5-0/guide-5.5.0-semini/install-guide/portal-1/paas-ta-container-platform-edge-deployment-guide-v1.0 
 
