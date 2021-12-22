@@ -33,7 +33,7 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134
 ```
 
 ### Deploying KubeEdge using Keadm
-*
+* Create Firewall Rules
 > By default ports 10000 and 10002 in your cloudcore needs to be accessible for your edge nodes.
 ```
 iptables -I INPUT -p tcp --dport 10000 -j ACCEPT
@@ -43,7 +43,7 @@ iptables -I INPUT -p tcp --dport 10002 -j ACCEPT
 iptables -L -v 
 ```
 
-
+* 
 wget https://github.com/kubeedge/kubeedge/releases/download/v1.8.2/keadm-v1.8.2-linux-amd64.tar.gztar -zxvf keadm-v1.8.2-linux-amd64.tar.gzcd keadm-v1.8.2-linux-amd64/keadm 
 
 ./keadm init --advertise-address=192.168.15.67 
