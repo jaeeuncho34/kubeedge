@@ -43,12 +43,45 @@ iptables -I INPUT -p tcp --dport 10002 -j ACCEPT
 iptables -L -v 
 ```
 
-* 
+* Install keadm
+```
 wget https://github.com/kubeedge/kubeedge/releases/download/v1.8.2/keadm-v1.8.2-linux-amd64.tar.gztar -zxvf keadm-v1.8.2-linux-amd64.tar.gzcd keadm-v1.8.2-linux-amd64/keadm 
+```
 
-./keadm init --advertise-address=192.168.15.67 
+* Install cloudcore
+```
+./keadm init --advertise-address=<THE-EXPOSED-IP>
 
 cat /var/log/kubeedge/cloudcore.log 
+```
+
+
+## Setup Edge Side (KubeEdge Worker Node)
+
+```
+vi /etc/nsswitch.conf 
+
+sudo echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf 
+
+sysctl -p 
+```
+
+* Get Token From Cloud Side
+
+```
+keadm gettoken
+```
+
+* Join Edge Node
+
+```
+ ./keadm join --cloudcore-ipport=<THE-EXPOSED-IP>:10000 --token=<TOKEN> 
+
+journalctl -u edgecore.service -b 
+```
+
+
+## Deploying Metrics-server
 
 git clone https://github.com/kubeedge/kubeedge.gitcd kubeedge/build/tools/ 
 
@@ -92,20 +125,6 @@ Keadm 설치는 ./keadm 어쩌구
  
 
  
-
-<edge> 
-
-vi /etc/nsswitch.conf 
-
-sudo echo "net.ipv4.ip_forward = 1" >> /etc/sysctl.conf 
-
-sysctl -p 
-
- 
-
- ./keadm join --cloudcore-ipport=192.168.15.67:10000 --token=f3908e5d65d89e33ff02d8d8ff4981646c62957b70e6f278a065ad9dffa3964b.eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2MzcxMTc2NDh9.EO0pPIcCsho2FK6C7OgB83MQtMa7ZFf9Pcw9y1fyGMM 
-
-journalctl -u edgecore.service -b 
 
  
 
