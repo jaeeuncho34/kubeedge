@@ -33,19 +33,6 @@ kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134
 ```
 
 
-https://paastaguide.gitbook.io/paas-ta-5-5-0/guide-5.5.0-semini/install-guide/portal-1/paas-ta-container-platform-edge-deployment-guide-v1.0 
-
- 
-
-Keadm 설치는 ./keadm 어쩌구 
-
-메트릭 서버는 파스타 대로 해도 됨 
-
-
- 
-
- 
-
 
  
 
@@ -80,6 +67,21 @@ vi components
 kubectl taint nodes --all node-role.kubernetes.io/master- 
 
 kubectl apply -f components 
+
+ 
+ 
+ 
+
+https://paastaguide.gitbook.io/paas-ta-5-5-0/guide-5.5.0-semini/install-guide/portal-1/paas-ta-container-platform-edge-deployment-guide-v1.0 
+
+ 
+
+Keadm 설치는 ./keadm 어쩌구 
+
+메트릭 서버는 파스타 대로 해도 됨 
+
+
+ 
 
  
 
