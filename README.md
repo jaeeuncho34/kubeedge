@@ -84,13 +84,18 @@ journalctl -u edgecore.service -b
 
 ## Deploying Metrics-server
 ### Enable kubectl logs Feature
+> Before metrics-server deployed, kubectl logs feature must be activated
 
-
+* Generate the certificates for CloudStream on cloud node
+```
 git clone https://github.com/kubeedge/kubeedge.gitcd kubeedge/build/tools/ 
 
 cp certgen.sh /etc/kubeedge/ 
 
 /etc/kubeedge/certgen.sh stream 
+```
+
+
 
 kubectl get cm tunnelport -nkubeedge -oyamliptables -t nat -A OUTPUT -p tcp --dport 10351 -j DNAT --to 192.168.15.67:10003 
 
