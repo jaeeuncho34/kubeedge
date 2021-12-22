@@ -32,11 +32,17 @@ sudo kubeadm init --apiserver-advertise-address=<IP ADRESS> --pod-network-cidr=1
 kubectl apply -f https://raw.githubusercontent.com/coreos/flannel/2140ac876ef134e0ed5af15c65e414cf26827915/Documentation/kube-flannel.yml 
 ```
 
+### Deploying KubeEdge using Keadm
+*
+> By default ports 10000 and 10002 in your cloudcore needs to be accessible for your edge nodes.
+```
+iptables -I INPUT -p tcp --dport 10000 -j ACCEPT
 
+iptables -I INPUT -p tcp --dport 10002 -j ACCEPT
 
- 
+iptables -L -v 
+```
 
-iptables -I INPUT -p tcp --dport 10000 -j ACCEPTiptables -I INPUT -p tcp --dport 10002 -j ACCEPTiptables -L -v 
 
 wget https://github.com/kubeedge/kubeedge/releases/download/v1.8.2/keadm-v1.8.2-linux-amd64.tar.gztar -zxvf keadm-v1.8.2-linux-amd64.tar.gzcd keadm-v1.8.2-linux-amd64/keadm 
 
