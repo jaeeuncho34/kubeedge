@@ -57,7 +57,7 @@ cat /var/log/kubeedge/cloudcore.log
 
 
 ## Setup Edge Side (KubeEdge Worker Node)
-
+* IP Forward Setting for EdgeMesh
 ```
 vi /etc/nsswitch.conf 
 
@@ -67,21 +67,24 @@ sysctl -p
 ```
 
 * Get Token From Cloud Side
+> Run keadm gettoken in cloud side will return the token, which will be used when joining edge nodes.
 
 ```
 keadm gettoken
 ```
 
 * Join Edge Node
-
+> keadm join will install edgecore and mqtt. It also provides a flag by which a specific version can be set.
 ```
- ./keadm join --cloudcore-ipport=<THE-EXPOSED-IP>:10000 --token=<TOKEN> 
+./keadm join --cloudcore-ipport=<THE-EXPOSED-IP>:10000 --token=<TOKEN> 
 
 journalctl -u edgecore.service -b 
 ```
 
 
 ## Deploying Metrics-server
+### Enable kubectl logs Feature
+
 
 git clone https://github.com/kubeedge/kubeedge.gitcd kubeedge/build/tools/ 
 
